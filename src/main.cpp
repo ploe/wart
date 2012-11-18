@@ -13,10 +13,7 @@ appreciated, but is not required.
 
 */
 
-#include <cstdlib>
-#include <iostream>
-
-#include "Cast.h"
+#include "wart.h"
 
 enum {
 	LIVE,

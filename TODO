@@ -1,0 +1,2 @@
+Write Buckets - resource managers, image and sound, use reference counting
+Write Stage - class encapsulating visual and aural output, might define Actor type here
