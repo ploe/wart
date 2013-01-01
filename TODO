@@ -1,0 +1,33 @@
+January 1st 2013
+	Currently adding Lua to the mix, my plans for Lua are using it for persistence (plain text save files, pretty fucking hackable) and Scene configuartion files. My desire for Actors and Castmembers is for me to be able to write either in C or Lua. Again this is so the game state is pretty fucking hackable, I want to be able to add things on the fly or if speed is a concern write it in C. I keep calling it C but I do mean C++.
+
+	Ideally I don't want to think about the resources too much, I want to slap in some almost intangible means of allocating the resources. Simply by setting a string in the right node and then if that string is loaded in the bucket we look for that resource and allocate it. But by that definition when all the things leeching off that resource decide they're not using it anymore I have to think of a way to garbage collect it. I think Actors and Castmembers will have to be explicitly popped off the stack. Or maybe resources should be pulled in by Scene, so things are deallocated only when a Scene changes. That actually makes a lot of sense and is the way I'm currently doing it in lime. Yeah I'm happy with that, since why would a game need to be able to pull shit in and out that rapidly. Perhaps resources could be tagged, so that shifts in resource can be nested within Scenes. Something like that aye...
+
+	This is contrary to the fact that I wanted resource allocation to be transparent and you just use the resources. But that'll be a major pain in the arse so it's wise to have explicit allocation and deallocation.
+
+	Bucket::Image(context tag, list of image names);
+
+	I don't think nested Buckets are a good idea.
+
+	Bucket {
+		tag = "castle",
+		sounds {
+			"fanfare.ogg", "laugh.ogg", "bgm.ogg"
+		},
+		images {
+			"king.png", "throne.png", "fop.png"
+		}
+	}
+
+	The BucketManager, ResourceManager, EffectsGuy whatever we wind up calling it will allocate a resource and keep tabs on which resources need keeping and which need tipping away? Maybe this idea with contexts is a little too rich. Between Scenes is ample time to pull shit in and everything is done at once. No I'm thinking about the contexts wrong... A global context would house all the interscene resources, for instance the player Graphic and the HUD, then there'd be a Bucket called Scene which holds all the Scene related gear and then other buckets with resources defined for another span/scope will be defined. So bucket{scene, sounds, images} would swap out all the graphics? NO SWAPPING OUT OF GRAPHICS, IF YOU WANT INTERSCENE RESOURCES YOU STICK THEM IN A SEPARATE BUCKET. CAPICHE?! Behind the BucketManager should keep tabs on who has it, and which buckets have it and once all the buckets don't hold that resource it is finally freed. Keep reinventing the wheel Atkinson - pal. ;D
+
+Back in November:
+Write Bucket
+	resource managers, image and sound
+	use reference counting
+Write Stage
+	class encapsulating visual and aural output 
+	might define Actor type here
+Write Player
+	half of this can be nicked from lime
+	where do I draw the line between SDL and wart? 

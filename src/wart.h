@@ -12,7 +12,7 @@
 		
 		Cast 	The events to be called each frame
 		Stage	The window/screen, the visual/aural output
-		Player	Mouse, keyboard and joypad i.e. input
+		Player	Mouse, keyboard and joypad i.e. input */
 
 	#include "Cast/Cast.h"
 

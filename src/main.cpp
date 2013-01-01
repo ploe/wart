@@ -13,7 +13,13 @@ appreciated, but is not required.
 
 */
 
+#include "SDL/SDL.h"
+#include "lua.hpp"
+
+
 #include "wart.h"
+
+/*	The Stage is the window	*/
 
 enum {
 	LIVE,
@@ -38,12 +44,12 @@ Castmember::~Castmember() {
 	for(Castmember *c = timeline; c != NULL; c = c->next) {
 		if(c == this) {
 			if(this->next) {
-				if(prev) prev->next = this->next;	/*	middle	*/
+				if(prev) prev->next = this->next;	/*	middle		*/
 				else timeline = this->next;		/*	top		*/
 			} 
 			else {
-				if(prev) prev->next = NULL;			/*	bottom	*/
-				else timeline = NULL;				/*	last	*/
+				if(prev) prev->next = NULL;		/*	bottom		*/
+				else timeline = NULL;			/*	last		*/
 			}
 			return;
 		}
@@ -62,8 +68,15 @@ Castmember::~Castmember() {
 	If ENCORE execute the same action again (could be deprecated)
 	If WRAP then the program closes */
 
+/*	FPS is the amount of frames per second,
+	A JIFFY is the minimum length of a frame.	*/
+
+#define FPS 30
+#define JIFFY 30/1000
+
 bool Cast::perform() {
 	Castmember *c = timeline;
+	int start = SDL_GetTicks();
 	while(c != NULL) {
 		if(c->status == LIVE) c->status = c->update();
 		
@@ -79,6 +92,7 @@ bool Cast::perform() {
 		}
 		else c = c->next;
 	}
+	if(JIFFY > (SDL_GetTicks() - start)) SDL_Delay(JIFFY - (SDL_GetTicks() - start));
 	return true;
 }
 
@@ -93,6 +107,29 @@ void Cast::purge() {
 		std::cout << "Another one bites the dust" << std::endl;
 	}
 }
+
+struct Stage {
+	static void set();
+	static void show();
+	Stage();
+	~Stage();
+	//static SDL_Surface *screen;	
+private:
+	static SDL_Surface *screen;
+};
+
+SDL_Surface *Stage::screen = NULL;
+
+void Stage::set() {
+	screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
+}
+
+void Stage::show() {
+	Stage::set();
+	while(Cast::perform()) SDL_Flip(screen);
+}
+
+
 
 /*	A bunch of example cast members
 	each implements different behaviour for the sake of testing. */
@@ -148,10 +185,15 @@ enum {
 	GUYBRUSH
 };
 
+
 int main(int argc, char *argv[]) {
-	new Suicidal(MYKE);
-	new Greeter(VIX);
-	new Director(GUYBRUSH);
-	while(Cast::perform()) continue;
+	lua_State *L = lua_open();
+	if(luaL_loadfile(L, "Scenes/test.lua") || lua_pcall(L, 0, 0, 0)) std::cout << "cannot run config file: " << lua_tostring(L, -1) << std::endl;
+	lua_getglobal(L, "name");
+	lua_getglobal(L, "age");
+	std::cout << "Hello they call me, "  << lua_tostring(L, -2) << " and I'm " << lua_tostring(L, -1) << " years old." << std::endl;
+	lua_close(L);
+	//Stage::set();
+	//while(Cast::perform()) continue;
 	return 0;
 }
