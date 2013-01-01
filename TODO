@@ -1,2 +1,9 @@
-Write Buckets - resource managers, image and sound, use reference counting
-Write Stage - class encapsulating visual and aural output, might define Actor type here
+Write Bucket
+	resource managers, image and sound
+	use reference counting
+Write Stage
+	class encapsulating visual and aural output 
+	might define Actor type here
+Write Player
+	half of this can be nicked from lime
+	where do I draw the line between SDL and wart? 
