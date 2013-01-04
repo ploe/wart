@@ -6,6 +6,9 @@
 
 	#include <cstdlib>
 	#include <iostream>
+
+	#include "SDL/SDL.h"
+	#include "lua.hpp"
 	
 	/*	The modules that compose wart. Like lime it follows a 
 		theatre/film analogy.

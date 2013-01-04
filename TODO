@@ -1,3 +1,25 @@
+January 4th 2013
+	Right, so going to have to get on with these Buckets. First I want to get the basic event handling framework in there. Player - which is the input (and can probably be partially nicked from lime) and Stage which is the output. The player module will be designed in such a way that the input is only gleaned from a handful of buttons. I don't want to use SDL directly once this system is written. Each button will be like UP, DOWN, LEFT, RIGHT, A, B, X, Y, L, R, start and select. Which is the SNES/DS buttons. The buttons can either be keyboard or joystick. At present wart doesn't use the mouse, nor do I intend it to.
+
+	Castmember Player {
+		bool isPressed();
+		Tag update();
+	private:
+		bool UP, DOWN, LEFT, RIGHT, A, B, X, Y, L, R, START, SELECT; 
+	}
+
+	update() {
+		If being killed then WRAP
+		Get keys/buttons
+		Update key/button states
+	}
+
+	I could do this the lime way so that when a button is pressed a Castmember is pushed to the front of the stack. It kinda sorta simplifies the implementation, and keeps it pretty hackable. But then again that might be a little too complicated. In lime where the interface was two buttons and you had to be hovering over what you were interacting with this approach was decent - but here buttons need different contexts and perhaps if the Actor or Castmember was listening for the press.
+
+	Another additional thing I want is the broadcast stack/queue. A way of passing simple messages along the stack. So if a GAME_PAUSED message is emitted the Castmember might stop. Or so a powerup is picked up which destroys all enemies so Actors listen for a "DESTROY_ALL_ENEMIES" message. It's a way of keeping state encapsulated without declaring too many variables - I reckon. This simple message passing mechanism avoids the... what should I call it? Loosewires of using variables, a good chunk of this endeavour is an exercise in insulation, to provide me with the means to describe fat globs of game, fat globs that don't intrude on eachothers' space.
+
+	Well actions speak louder than words, I best get this Player module in.
+
 January 1st 2013
 	Currently adding Lua to the mix, my plans for Lua are using it for persistence (plain text save files, pretty fucking hackable) and Scene configuartion files. My desire for Actors and Castmembers is for me to be able to write either in C or Lua. Again this is so the game state is pretty fucking hackable, I want to be able to add things on the fly or if speed is a concern write it in C. I keep calling it C but I do mean C++.
 
