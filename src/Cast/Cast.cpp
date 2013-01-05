@@ -2,7 +2,7 @@
 
 Castmember *timeline = NULL;
 
-Castmember::Castmember(int t) {
+Castmember::Castmember(Tag t) {
 	tag = t;
 	next = timeline;
 	timeline = this;

@@ -96,13 +96,14 @@ enum {
 
 
 int main(int argc, char *argv[]) {
-	lua_State *L = lua_open();
-	if(luaL_loadfile(L, "Scenes/test.lua") || lua_pcall(L, 0, 0, 0)) std::cout << "cannot run config file: " << lua_tostring(L, -1) << std::endl;
-	lua_getglobal(L, "name");
-	lua_getglobal(L, "age");
-	std::cout << "Hello they call me, "  << lua_tostring(L, -2) << " and I'm " << lua_tostring(L, -1) << " years old." << std::endl;
-	lua_close(L);
-	//Stage::set();
-	//while(Cast::perform()) continue;
+	//lua_State *L = lua_open();
+	//if(luaL_loadfile(L, "Scenes/test.lua") || lua_pcall(L, 0, 0, 0)) std::cout << "cannot run config file: " << lua_tostring(L, -1) << std::endl;
+	//lua_getglobal(L, "name");
+	//lua_getglobal(L, "age");
+	//std::cout << "Hello they call me, "  << lua_tostring(L, -2) << " and I'm " << lua_tostring(L, -1) << " years old." << std::endl;
+	//lua_close(L);
+	new Player(GUYBRUSH);
+	Stage::set();
+	while(Cast::perform()) continue;
 	return 0;
 }
