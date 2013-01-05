@@ -34,6 +34,8 @@ appreciated, but is not required.
 
 	#include "Cast/Cast.h"
 	#include "Player/Player.h"
+	#include "Stage/Stage.h"
+
 	extern lua_State *L;
 
 #endif

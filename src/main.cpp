@@ -15,41 +15,6 @@ appreciated, but is not required.
 
 #include "wart.h"
 
-/*	The Stage is the window	*/
-
-struct Stage : Castmember {
-	virtual Tag update();
-	Stage(Tag);
-	~Stage();
-	lua_State *lua;
-private:
-	SDL_Surface *screen;
-	int start;
-};
-
-Stage::Stage(Tag t) : Castmember (t) {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
-	start = SDL_GetTicks();
-	lua = lua_open();
-}
-
-Stage::~Stage() {
-	lua_close(lua);
-	SDL_FreeSurface(screen);
-	SDL_Quit();
-}
-
-#define TICKS 1000
-#define JIFFY TICKS/25
-
-Tag Stage::update() {
-	if(JIFFY > (SDL_GetTicks() - start)) SDL_Delay(JIFFY - (SDL_GetTicks() - start));
-	SDL_Flip(screen);
-	start = SDL_GetTicks();
-	return LIVE;
-}
-
 enum {
 	MYKE,
 	VIX,

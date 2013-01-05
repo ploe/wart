@@ -48,7 +48,6 @@ Castmember::~Castmember() {
 
 bool Cast::perform() {
 	Castmember *c = timeline;
-	int start = SDL_GetTicks();
 	while(c != NULL) {
 		if(c->status == LIVE) c->status = c->update();
 		
@@ -64,7 +63,6 @@ bool Cast::perform() {
 		}
 		else c = c->next;
 	}
-	if(JIFFY > (SDL_GetTicks() - start)) SDL_Delay(JIFFY - (SDL_GetTicks() - start));
 	return true;
 }
 
