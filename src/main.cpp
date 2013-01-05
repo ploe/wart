@@ -17,73 +17,36 @@ appreciated, but is not required.
 
 /*	The Stage is the window	*/
 
-struct Stage {
-	static void set();
-	static void show();
-	Stage();
+struct Stage : Castmember {
+	virtual Tag update();
+	Stage(Tag);
 	~Stage();
-	//static SDL_Surface *screen;	
+	lua_State *lua;
 private:
-	static SDL_Surface *screen;
+	SDL_Surface *screen;
+	int start;
 };
 
-SDL_Surface *Stage::screen = NULL;
-
-void Stage::set() {
+Stage::Stage(Tag t) : Castmember (t) {
+	SDL_Init(SDL_INIT_EVERYTHING);
 	screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
+	start = SDL_GetTicks();
+	lua = lua_open();
 }
 
-void Stage::show() {
-	Stage::set();
-	while(Cast::perform()) SDL_Flip(screen);
+Stage::~Stage() {
+	lua_close(lua);
+	SDL_FreeSurface(screen);
+	SDL_Quit();
 }
 
+#define TICKS 1000
+#define JIFFY TICKS/25
 
-
-/*	A bunch of example cast members
-	each implements different behaviour for the sake of testing. */
-
-//	Suicidal is a Castmember who kills itself.
-
-struct Suicidal : Castmember {
-	Suicidal(Tag t) : Castmember(t) {};
-	virtual Tag update();
-};
-
-Tag Suicidal::update() {
-	std::cout << "Goodbye cruel world." << std::endl;
-	return CUT;
-}
-
-// Greeter says Hello, every single frame.
-
-struct Greeter : Castmember {
-	Greeter(Tag t) : Castmember(t) {i = 0;};
-	virtual Tag update();
-private:
-	int i;
-};
-
-Tag Greeter::update() {
-	if(i++) std::cout << "Hello. I've seen you " << i << " times now." << std::endl;
-	else std::cout << "Hello" << std::endl;
-	return LIVE;
-}
-
-// The Director kills the whole program
-
-struct Director : Castmember {
-	Director(Tag t) : Castmember(t) {i = 0;};
-	virtual Tag update();
-private:
-	int i;
-};
-
-Tag Director::update() {
-	if(++i > 10)  {
-		std::cout << "That's a wrap!" << std::endl;
-		return WRAP;
-	}
+Tag Stage::update() {
+	if(JIFFY > (SDL_GetTicks() - start)) SDL_Delay(JIFFY - (SDL_GetTicks() - start));
+	SDL_Flip(screen);
+	start = SDL_GetTicks();
 	return LIVE;
 }
 
@@ -94,16 +57,19 @@ enum {
 	GUYBRUSH
 };
 
+lua_State *L;
+
+Stage *stage;
 
 int main(int argc, char *argv[]) {
-	//lua_State *L = lua_open();
+	L = lua_open();
 	//if(luaL_loadfile(L, "Scenes/test.lua") || lua_pcall(L, 0, 0, 0)) std::cout << "cannot run config file: " << lua_tostring(L, -1) << std::endl;
 	//lua_getglobal(L, "name");
 	//lua_getglobal(L, "age");
 	//std::cout << "Hello they call me, "  << lua_tostring(L, -2) << " and I'm " << lua_tostring(L, -1) << " years old." << std::endl;
 	//lua_close(L);
 	new Player(GUYBRUSH);
-	Stage::set();
+	new Stage(MYKE);
 	while(Cast::perform()) continue;
 	return 0;
 }

@@ -24,6 +24,8 @@ Player::Player(Tag t) : Castmember(t) {
 }
 
 Tag Player::update() {
+	//if KEY_CAPTOR_LIVE return LIVE
+
 	SDL_Event event;
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
@@ -32,8 +34,9 @@ Tag Player::update() {
 			break;
 		}
 	}
+
 	key = SDL_GetKeyState(NULL);
-	
+	refresh();
 	if(key[SDLK_UP]) up = true;
 	if(key[SDLK_DOWN]) down = true;
 	if(key[SDLK_LEFT]) left = true;
@@ -45,3 +48,14 @@ Tag Player::update() {
 bool Player::pressing(Tag t) {
 	return *(&up + t);	/* C programmer, bitch ;)	*/
 }
+
+Tag KeyCaptor::update() {
+	//emit KEYCAPTOR_ALIVE
+	
+	return LIVE;
+}
+/*
+Cue::Cue() {
+	lua_newtable(L);
+}
+*/

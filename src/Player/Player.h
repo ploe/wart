@@ -16,17 +16,42 @@ appreciated, but is not required.
 #ifndef WART_PLAYER
 #define WART_PLAYER
 
+/* The Player class is the key listener, at the moment it's written to set private members when a key
+ is depressed. But for the sake of simplicity I think I'llpush keypresses in to the Cue system I'm
+ presently working on */
+
 	struct Player : Castmember {
 		virtual Tag update();
-		Player(Tag t);
+		Player(Tag);
 		enum {
 			UP, DOWN, LEFT, RIGHT, A, B, L, R, START, SELECT 
 		};
 		bool pressing(Tag t);
+		void setkey(Tag, SDLKey);
 	private:
 		Uint8 *key;
 		void refresh();
 		bool up, down, left, right, a, b, l, r, start, select;
 	};
 
+/* KeyCaptor is a dumb little class that intercepts the Player and captures keypresses, and maps those
+keys to buttons in the player using the setkey member function. */
+
+	struct KeyCaptor : Castmember  {
+		virtual Tag update();
+		KeyCaptor(Tag);	
+	};
+
+/* The Cue system will be the simple message passing infrastructure. A Cue can either exist
+till the end of the frame, pushed using the message function, or forever using the persist function.
+If you want rid of a Cue you wipe it. Zero, one, infinity rule ;) 
+
+	struct Cue {
+		static void message(char *);
+		static void persist(char *);
+		static void wipe(char *);
+	private:
+		int ref;
+	};
+*/
 #endif

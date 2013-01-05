@@ -1,3 +1,8 @@
+January 5th 2013
+	So the basic key framework is in. What I intend to do is add a basic key listening class which I will use to configure the button presses - I think =) Keyboard and Joypad. I've never done Joypad before so this'll be interesting. I'm thinking the listening will be a massive pain in the arse, as when listening for the first key it'll have to decide whether we're using keyboard or mouse. Unless I can think of an easy way to dumb it down. We'll see...
+
+	Just been thinking that this message passing system, which I've called the Cue system, might be a wise option for actually throwing about the button presses and the like. =) S'wicked!
+
 January 4th 2013
 	Right, so going to have to get on with these Buckets. First I want to get the basic event handling framework in there. Player - which is the input (and can probably be partially nicked from lime) and Stage which is the output. The player module will be designed in such a way that the input is only gleaned from a handful of buttons. I don't want to use SDL directly once this system is written. Each button will be like UP, DOWN, LEFT, RIGHT, A, B, X, Y, L, R, start and select. Which is the SNES/DS buttons. The buttons can either be keyboard or joystick. At present wart doesn't use the mouse, nor do I intend it to.
 
