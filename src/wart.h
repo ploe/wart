@@ -21,6 +21,9 @@ appreciated, but is not required.
 
 	#include <cstdlib>
 	#include <iostream>
+	#include <string>
+
+	using namespace std;
 
 	#include "SDL/SDL.h"
 	#include "lua.hpp"

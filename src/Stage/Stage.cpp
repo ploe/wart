@@ -24,7 +24,7 @@ Its update function throttles the framerate, and flips the screen. */
 
 Stage *stage;
 
-Stage::Stage(Tag t) : Castmember (t) {
+Stage::Stage(string t) : Castmember (t) {
 
 	/*	Set window size	*/
 	viewport.w = 800; viewport.h = 600;

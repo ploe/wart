@@ -19,7 +19,7 @@ void Player::refresh() {
 	for(bool *i = &up; i <= &select; i++) *i = false;
 }
 
-Player::Player(Tag t) : Castmember(t) {
+Player::Player(string t) : Castmember(t) {
 	refresh();
 }
 

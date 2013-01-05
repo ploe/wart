@@ -33,9 +33,10 @@ enum {
 
 
 struct Castmember {
+	string name;
 	Tag tag, status;
 	Castmember *next;
-	Castmember(Tag);
+	Castmember(string);
 	~Castmember();
 	virtual Tag update() = 0;
 };

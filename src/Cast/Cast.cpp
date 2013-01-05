@@ -2,8 +2,8 @@
 
 Castmember *timeline = NULL;
 
-Castmember::Castmember(Tag t) {
-	tag = t;
+Castmember::Castmember(string t) {
+	name = t;
 	next = timeline;
 	timeline = this;
 }

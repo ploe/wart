@@ -32,8 +32,8 @@ int main(int argc, char *argv[]) {
 	//lua_getglobal(L, "age");
 	//std::cout << "Hello they call me, "  << lua_tostring(L, -2) << " and I'm " << lua_tostring(L, -1) << " years old." << std::endl;
 	//lua_close(L);
-	new Player(GUYBRUSH);
-	new Stage(MYKE);
+	new Player("Player Daemon");
+	new Stage("Stage Daemon");
 	while(Cast::perform()) continue;
 	return 0;
 }

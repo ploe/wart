@@ -21,6 +21,7 @@ appreciated, but is not required.
 	struct Stage : Castmember {
 		virtual Tag update();
 		Stage(Tag);
+		Stage(string);
 		~Stage();
 		lua_State *lua;
 		void update_viewport(int, int);
