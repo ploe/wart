@@ -22,11 +22,14 @@ everything else and destroyed appropriately.
 
 Its update function throttles the framerate, and flips the screen. */
 
+Stage *stage;
+
 Stage::Stage(Tag t) : Castmember (t) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
 	start = SDL_GetTicks();
 	lua = lua_open();
+	stage = this;
 }
 
 Stage::~Stage() {
@@ -47,3 +50,8 @@ Tag Stage::update() {
 
 #undef TICKS
 #undef JIFFY
+
+void Stage::update_viewport(int x, int y) {
+	viewport.x = x;
+	viewport.y = y;
+}

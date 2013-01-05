@@ -23,9 +23,13 @@ appreciated, but is not required.
 		Stage(Tag);
 		~Stage();
 		lua_State *lua;
+		void update_viewport(int, int);
 	private:
 		SDL_Surface *screen;
+		SDL_Rect viewport;
 		int start;
 };
+
+extern Stage *stage;
 
 #endif

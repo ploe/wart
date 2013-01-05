@@ -22,12 +22,7 @@ enum {
 	GUYBRUSH
 };
 
-lua_State *L;
-
-Stage *stage;
-
 int main(int argc, char *argv[]) {
-	L = lua_open();
 	//if(luaL_loadfile(L, "Scenes/test.lua") || lua_pcall(L, 0, 0, 0)) std::cout << "cannot run config file: " << lua_tostring(L, -1) << std::endl;
 	//lua_getglobal(L, "name");
 	//lua_getglobal(L, "age");

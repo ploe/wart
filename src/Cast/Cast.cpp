@@ -74,6 +74,5 @@ void Cast::purge() {
 		Castmember *next = c->next;
 		delete c;
 		c = next;
-		std::cout << "Another one bites the dust" << std::endl;
 	}
 }
