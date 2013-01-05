@@ -22,6 +22,10 @@ enum {
 	GUYBRUSH
 };
 
+/* We push Player and then Stage to the to the Cast and then we let it all go mental.
+First Stage is executed and then Player. I might add functionality to Stage's constructor
+which makes it read command line args	*/
+
 int main(int argc, char *argv[]) {
 	//if(luaL_loadfile(L, "Scenes/test.lua") || lua_pcall(L, 0, 0, 0)) std::cout << "cannot run config file: " << lua_tostring(L, -1) << std::endl;
 	//lua_getglobal(L, "name");

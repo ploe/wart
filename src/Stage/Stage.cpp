@@ -25,10 +25,20 @@ Its update function throttles the framerate, and flips the screen. */
 Stage *stage;
 
 Stage::Stage(Tag t) : Castmember (t) {
+
+	/*	Set window size	*/
+	viewport.w = 800; viewport.h = 600;
+	update_viewport(0, 0);
+
+	/*	Drag SDL in	*/
 	SDL_Init(SDL_INIT_EVERYTHING);
-	screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
+	screen = SDL_SetVideoMode(viewport.w, viewport.h, 16, SDL_HWSURFACE);
 	start = SDL_GetTicks();
+
+	/*	Then Lua	*/
 	lua = lua_open();
+
+	/*	Make Stage global without static acrobatics	*/
 	stage = this;
 }
 
@@ -52,6 +62,5 @@ Tag Stage::update() {
 #undef JIFFY
 
 void Stage::update_viewport(int x, int y) {
-	viewport.x = x;
-	viewport.y = y;
+	viewport.x = x; viewport.y = y;
 }
