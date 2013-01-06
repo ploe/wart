@@ -70,3 +70,49 @@ Tag Stage::update() {
 void Stage::update_viewport(int x, int y) {
 	viewport.x = x; viewport.y = y;
 }
+
+void Stage::stackdump(string str) {
+	cout << str << "\t";
+	for(int i = 1; i <= lua_gettop(lua); i++) {
+		switch(int t = lua_type(lua, i)) {
+			case LUA_TSTRING: cout << lua_tostring(lua, i); break;
+			case LUA_TNUMBER: cout << lua_tonumber(lua, i); break;
+			case LUA_TBOOLEAN: cout << (lua_toboolean(lua, i) ? "true" : "false");
+			default: cout << lua_typename(lua, t); break; 
+		}
+		cout << "\t";
+	}
+	cout << endl;
+}
+
+Cue::Cue(string t) : Castmember(t) {
+	lua_newtable(stage->lua);
+	
+	/*	message table within cue	*/
+	lua_newtable(stage->lua);
+	lua_setfield(stage->lua, -2,"message");
+	/*	and finally the persist table	*/
+	lua_newtable(stage->lua);
+	lua_setfield(stage->lua, -2,"persist");
+
+	lua_setglobal(stage->lua, "cue");
+}
+
+Status Cue::update() {
+	lua_getglobal(stage->lua, "cue");
+	lua_newtable(stage->lua);
+	lua_setfield(stage->lua, -2, "message");
+	lua_settop(stage->lua, 0);
+
+	/*
+	lua_pushnil(stage->lua);
+	while(lua_next(stage->lua, 1)) {
+		if(lua_isstring(stage->lua, -2)) 
+			cout << lua_tostring(stage->lua, -2) << endl;
+		lua_pop(stage->lua, 1);	
+	}
+	lua_pop(stage->lua, -1);
+	*/
+
+	return LIVE;
+}

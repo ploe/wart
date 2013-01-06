@@ -25,6 +25,7 @@ appreciated, but is not required.
 		~Stage();
 		lua_State *lua;
 		void update_viewport(int, int);
+		void stackdump(string);
 	private:
 		SDL_Surface *screen;
 		SDL_Rect viewport;
@@ -32,5 +33,19 @@ appreciated, but is not required.
 };
 
 extern Stage *stage;
+
+/* The Cue system will be the simple message passing infrastructure. A Cue can either exist
+till the end of the frame, pushed using the message function, or forever using the persist function.
+If you want rid of a Cue you wipe it. Zero, one, infinity rule ;) */
+
+	struct Cue : Castmember {
+		void wipe(string);
+		void message(string);
+		void persist(string);
+		virtual Status update();
+		Cue(string);
+	private:
+		int ref;
+	};
 
 #endif
