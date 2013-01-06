@@ -36,10 +36,16 @@ Stage::Stage(string t) : Castmember (t) {
 	start = SDL_GetTicks();
 
 	/*	Then Lua	*/
-	lua = lua_open();
-
+	lua = NULL;
+	lua = luaL_newstate();
+	luaL_openlibs(lua);
+	
 	/*	Make Stage global without static acrobatics	*/
 	stage = this;
+
+	/* Other necessary daemons, that require the Stage to be created first	*/
+	new Cue("Cue Daemon");
+
 }
 
 Stage::~Stage() {

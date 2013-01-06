@@ -24,6 +24,7 @@ typedef int Tag;
 	A Castmember is an object that sits on the timeline. Each frame
 	every Castmembers' update function is called. */
 
+typedef int Status;
 enum {
 	LIVE,
 	CUT,

@@ -22,7 +22,6 @@ appreciated, but is not required.
 
 	struct Player : Castmember {
 		virtual Tag update();
-		Player(Tag);
 		Player(string);
 		enum {
 			UP, DOWN, LEFT, RIGHT, A, B, L, R, START, SELECT 
@@ -40,20 +39,21 @@ keys to buttons in the player using the setkey member function. */
 
 	struct KeyCaptor : Castmember  {
 		virtual Tag update();
-		KeyCaptor(Tag);
 		KeyCaptor(string);	
 	};
 
 /* The Cue system will be the simple message passing infrastructure. A Cue can either exist
 till the end of the frame, pushed using the message function, or forever using the persist function.
-If you want rid of a Cue you wipe it. Zero, one, infinity rule ;) 
+If you want rid of a Cue you wipe it. Zero, one, infinity rule ;) */
 
-	struct Cue {
-		static void message(char *);
-		static void persist(char *);
-		static void wipe(char *);
+	struct Cue : Castmember {
+		void wipe(string);
+		void message(string);
+		void persist(string);
+		virtual Status update();
+		Cue(string);
 	private:
 		int ref;
 	};
-*/
+
 #endif

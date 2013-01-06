@@ -54,8 +54,30 @@ Tag KeyCaptor::update() {
 	
 	return LIVE;
 }
-/*
-Cue::Cue() {
-	lua_newtable(L);
+
+Cue::Cue(string t) : Castmember(t) {
+	lua_newtable(stage->lua);
+	
+	/*	message table within cue	*/
+	lua_newtable(stage->lua);
+	lua_setfield(stage->lua, -2,"message");
+
+	/*	and finally the persist table	*/
+	lua_newtable(stage->lua);
+	lua_setfield(stage->lua, -2,"persist");
+
+	lua_setglobal(stage->lua, "cue");
 }
-*/
+
+Status Cue::update() {
+	lua_getglobal(stage->lua, "cue");
+	//lua_newtable(stage->lua);
+	//lua_setfield(stage->lua, -2, "message");
+	lua_pushnil(stage->lua);
+	while(lua_next(stage->lua, 1)) {
+		if(lua_isstring(stage->lua, -2)) cout << lua_tostring(stage->lua, -2) << endl;
+		lua_pop(stage->lua, 1);
+	}
+	lua_pop(stage->lua, -1);
+	return LIVE;
+}
