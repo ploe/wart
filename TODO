@@ -1,3 +1,6 @@
+January 6th 2013
+	It's weird how these things pan out. Maybe I'm just a tangential programmer? Anyway what started as work on the joystick stuff has fed in to what is now the Cue system and the Lua based persistence - the saving stuff. So hopefully by the end of the day we might have this message passing stuff done in a way that's useful and either saving or keys. X) Go with the flow Atkinson ;)
+
 January 5th 2013
 	So the basic key framework is in. What I intend to do is add a basic key listening class which I will use to configure the button presses - I think =) Keyboard and Joypad. I've never done Joypad before so this'll be interesting. I'm thinking the listening will be a massive pain in the arse, as when listening for the first key it'll have to decide whether we're using keyboard or mouse. Unless I can think of an easy way to dumb it down. We'll see...
 

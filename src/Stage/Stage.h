@@ -32,7 +32,7 @@ appreciated, but is not required.
 		int start;
 };
 
-extern Stage *stage;
+	extern Stage *stage;
 
 /* The Cue system will be the simple message passing infrastructure. A Cue can either exist
 till the end of the frame, pushed using the message function, or forever using the persist function.
@@ -48,4 +48,5 @@ If you want rid of a Cue you wipe it. Zero, one, infinity rule ;) */
 		int ref;
 	};
 
+	extern Cue *cue;
 #endif

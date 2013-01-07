@@ -85,6 +85,8 @@ void Stage::stackdump(string str) {
 	cout << endl;
 }
 
+Cue *cue;
+
 Cue::Cue(string t) : Castmember(t) {
 	lua_newtable(stage->lua);
 	
@@ -94,12 +96,13 @@ Cue::Cue(string t) : Castmember(t) {
 	/*	and finally the persist table	*/
 	lua_newtable(stage->lua);
 	lua_setfield(stage->lua, -2,"persist");
-
-	lua_setglobal(stage->lua, "cue");
+	lua_setfield(stage->lua, LUA_REGISTRYINDEX, "wart");
+	message("test");
+	cue = this;
 }
 
 Status Cue::update() {
-	lua_getglobal(stage->lua, "cue");
+	lua_getfield(stage->lua, LUA_REGISTRYINDEX, "wart");
 	lua_newtable(stage->lua);
 	lua_setfield(stage->lua, -2, "message");
 	lua_settop(stage->lua, 0);
@@ -115,4 +118,14 @@ Status Cue::update() {
 	*/
 
 	return LIVE;
+}
+
+void Cue::message(string message) {
+	lua_getfield(stage->lua, LUA_REGISTRYINDEX, "wart");
+	lua_getfield(stage->lua, -1, "message");
+	lua_pushboolean(stage->lua, 1);
+	lua_setfield(stage->lua, -2, message.c_str());
+	lua_getfield(stage->lua, -1, message.c_str());
+	stage->stackdump("Message Pushed: ");
+	lua_settop(stage->lua, 0);
 }
