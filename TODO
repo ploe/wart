@@ -1,3 +1,31 @@
+January 30th 2013
+	Finally, finished the sticky bit of the message system.
+
+January 18th 2013
+	Fucked the message system last week, tried to do message stack but crammed too much in to the one loop. The fix? Two loops. One which pops off tables in the path and then one that opens the tables up. Easy, but a wasted weekend!
+
+January 12th 2013
+	Backshift this week. Had an idea to do with memcached and yaml for a distributed, co-operative development system. Once I'm through thatching this together it might be wise to have a play. Decided that the Cue system should work like this: everything in the message/tmp directory is killed each frame and everything else in the wart namespace is persistent, so a save would just be a dumping everything but the tmp dir in to the save file, which would be Lua too.
+
+	wart {
+		map = piss,
+		table = {all, the, things, I, shat, out},
+		player = {x, y, LOL},
+		bag = {inventory, items, picked, up},
+		buckets = { player = {"hud.png", "sprite.png"}, scene = {"mobs.png", "tile1.png", "growl.ogg"} },
+		something_that_wants_saving = true
+	}
+
+	This means I could use one Cue function like this:
+
+	Cue::dump("path/to/key", "Myke");
+	Cue::dump("tmp/BUTTON_B", true);
+
+	To pick apart the paths I could use the Lua string library, I'd have to get a feel for that first though. So today's COA - I guess finishing off the message stack so I can start work on something visual. Hopefully I'll ZOOM though it.
+
+January 7th 2013
+	Lua is really unintuitive on the C-side. The stack takes some head scratching to get started on and there seems to be a lot of repetitive behaviour that might be easier to have wrapped in functions. Just trying to think of a decent analogy - at the moment I'm going with files and directories but that isn't quite right... I don't think.
+
 January 6th 2013
 	It's weird how these things pan out. Maybe I'm just a tangential programmer? Anyway what started as work on the joystick stuff has fed in to what is now the Cue system and the Lua based persistence - the saving stuff. So hopefully by the end of the day we might have this message passing stuff done in a way that's useful and either saving or keys. X) Go with the flow Atkinson ;)
 
